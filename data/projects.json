@@ -2,7 +2,7 @@
     {
         "title": "NodeBuster",
         "image": "https://github.com/Hippolyte-LePallec/Portfolio/blob/main/public/nodebusterexplose.png?raw=true",
-        "description": "Un jeu de tir spatial en 2D, développé.",
+        "description": "Un jeu de tir spatial en 2D où vous devez détruire des carrés.",
         "link": "https://example.com/projet-1",
         "tags": ["Jeu", "2D", "Tir"],
         "technologies": [
@@ -12,7 +12,7 @@
     {
         "title": "Jeu de la Vie de Conway",
         "image": "https://github.com/Hippolyte-LePallec/Portfolio/blob/main/public/GoLapp.png?raw=true",
-        "description": "Un simulateur du célèbre jeu de la vie de Conway, développé en C++.",
+        "description": "Un simulateur du célèbre jeu de la vie de Conway.",
         "link": "https://example.com/projet-1",
         "tags": ["Jeu", "Simulation"],
         "technologies": [
