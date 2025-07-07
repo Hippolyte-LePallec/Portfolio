@@ -20,7 +20,6 @@ const props = defineProps<{
             <h3 class="text-lg font-semibold">{{ project.title }}</h3>
             <p class="text-gray-600">{{ project.description }}</p>
             
-            <!-- Tags -->
             <div class="mt-2">
                 <span 
                     v-for="tag in project.tags" 
@@ -31,7 +30,6 @@ const props = defineProps<{
                 </span>
             </div>
             
-            <!-- Technologies avec icônes -->
             <div class="mt-2 mb-2">
                 <span 
                     v-for="tech in project.technologies" 
@@ -50,7 +48,7 @@ const props = defineProps<{
         <UCardFooter>
             <UButton
                 variant="solid"
-                color="primary"
+                color="secondary"
                 :to="project.link"
                 target="_blank"
             >

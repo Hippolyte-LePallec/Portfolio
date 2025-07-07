@@ -1,0 +1,37 @@
+[
+    {
+        "date": "2021",
+        "title": "Stage de seconde dans un bureau d'études chez une pme locale",
+        "description": "J'ai utilisé le logiciel SolidWorks pour modéliser des pièces mécaniques et j'ai appris comment fonctionne une pme.",
+        "icon": "i-material-symbols-work",
+        "value": "Stage de seconde"
+    },
+    {
+        "date": "2019-2022",
+        "title": "Baccalauréat STI2D",
+        "description": "Option Système d'information et numérique (SIN) où j'ai appris les bases de la programmation et de l'électronique.",
+        "icon": "i-material-symbols-school",
+        "value": "Baccalauréat STI2D"
+    },
+    {
+        "date": "2023",
+        "title": "Site web pour une borne au port de Calais",
+        "description": "J'ai participé à la création d'un site web dans une équipe de 4 pour une borne au port de Calais.",
+        "icon": "i-tdesign-html5-filled",
+        "value": "Site web pour une borne au port de Calais"
+    },
+    {
+        "date": "2025",
+        "title": "Stage de deuxième année de BUT",
+        "description": "J'ai effectué un stage de 10 semaines dans le Technicentre Est Européen du groupe SNCF en tant que développeur web pour developer et maintenir les application interne au technicentre.",
+        "icon": "i-teenyicons-react-solid",
+        "value": "Stage de deuxième année de BUT"
+    },
+    {
+        "date": "2022-present",
+        "title": "BUT Informatique",
+        "description": "Actuellement étudiant en BUT Informatique à l'IUT de Calais, où j'approfondis mes connaissances en programmation, bases de données et développement web.",
+        "icon": "i-fa6-solid-school",
+        "value": "BUT Informatique"
+    }
+]
