@@ -33,7 +33,7 @@
         "title": "Movie Rating prediction",
         "image": "https://github.com/Hippolyte-LePallec/Portfolio/blob/main/public/movie_rating.png?raw=true",
         "description": "Un site web de prédiction de notes de films basé sur les données de IMDB.",
-        "link": "https://github.com/Hippolyte-LePallec/Movie_Rating_Prediction.git",
+        "link": "https://github.com/Hippolyte-LePallec/Movie-Rating-prediction.git",
         "tags": ["Web", "Prédiction", "IMDB", "Movies"],
         "technologies": [
             {"name": "PHP", "icon": "https://api.iconify.design/logos:php.svg"},
