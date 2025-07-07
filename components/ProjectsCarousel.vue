@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { Project } from '../types/project';
+import projectsData from '../data/projects.json';
 
 const projects = ref<Project[]>([]);
-
-import projectsData from '../data/projects.json';
 
 if (Array.isArray(projectsData)) {
     projects.value = projectsData.map((project: any) => ({
