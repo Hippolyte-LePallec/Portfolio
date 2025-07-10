@@ -49,7 +49,6 @@ onMounted(async () => {
         delay: 0.3,
     });
 
-    // Grille techs
     gsap.from(techGrid.value, {
         opacity: 0,
         y: 50,
@@ -140,6 +139,46 @@ const technologies = [
         icon: "https://api.iconify.design/file-icons:latex.svg",
         link: "https://www.overleaf.com/learn",
     },
+    {
+        label: "Docker",
+        icon: "https://api.iconify.design/logos:docker-icon.svg",
+        link: "https://docs.docker.com/get-started/",
+    },
+    {
+        label: "Linux",
+        icon: "https://api.iconify.design/logos:linux-tux.svg",
+        link: "https://www.kernel.org/doc/html/latest/",
+    },
+    {
+        label: "Figma",
+        icon: "https://api.iconify.design/logos:figma.svg",
+        link: "https://www.figma.com/resources/learn-design/",
+    },
+    {
+        label: "MongoDB",
+        icon: "https://api.iconify.design/devicon:mongodb-wordmark.svg",
+        link: "https://www.mongodb.com/docs/"
+    },
+    {
+        label: "Node.js",
+        icon: "https://api.iconify.design/logos:nodejs-icon.svg",
+        link: "https://nodejs.org/en/docs/"
+    },
+    {
+        label: "Express.js",
+        icon: "https://api.iconify.design/logos:express.svg",
+        link: "https://expressjs.com/en/starter/installing.html"
+    },
+    {
+        label: "Bootstrap",
+        icon: "https://api.iconify.design/logos:bootstrap.svg",
+        link: "https://getbootstrap.com/docs/5.3/getting-started/introduction/"
+    },
+    {
+        label: "WordPress",
+        icon: "https://api.iconify.design/logos:wordpress-icon.svg",
+        link: "https://wordpress.org/docs/"
+    }
 ];
 </script>
 

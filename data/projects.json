@@ -3,7 +3,7 @@
         "title": "NodeBuster",
         "image": "https://github.com/Hippolyte-LePallec/Portfolio/blob/main/public/nodebusterexplose.png?raw=true",
         "description": "Un jeu de tir spatial en 2D où vous devez détruire des carrés.",
-        "link": "https://example.com/projet-1",
+        "link": "https://github.com/Hippolyte-LePallec/TP-Jeu-NodeBuster.git",
         "tags": ["Jeu", "2D", "Tir"],
         "technologies": [
             {"name": "Java", "icon": "https://api.iconify.design/logos:java.svg"}
@@ -13,7 +13,7 @@
         "title": "Jeu de la Vie de Conway",
         "image": "https://github.com/Hippolyte-LePallec/Portfolio/blob/main/public/GoLapp.png?raw=true",
         "description": "Un simulateur du célèbre jeu de la vie de Conway.",
-        "link": "https://example.com/projet-1",
+        "link": "https://github.com/Hippolyte-LePallec/TP-GoL-Conway.git",
         "tags": ["Jeu", "Simulation"],
         "technologies": [
             {"name": "C++", "icon": "https://api.iconify.design/logos:c-plusplus.svg"}
@@ -38,6 +38,28 @@
         "technologies": [
             {"name": "PHP", "icon": "https://api.iconify.design/logos:php.svg"},
             {"name": "PostgreSQL", "icon": "https://api.iconify.design/logos:postgresql.svg"},
+            {"name": "CSS", "icon": "https://api.iconify.design/logos:css-3.svg"}
+        ]
+    },
+    {
+        "title": "JEI App",
+        "image": "https://github.com/Hippolyte-LePallec/Portfolio/blob/main/public/flutter.png?raw=true",
+        "description": "Une application mobile pour afficher les crafts de Minecraft en utilisant une API.",
+        "link": "https://github.com/keylian15/flutterproject.git",
+        "tags": ["Mobile", "Minecraft", "API"],
+        "technologies": [
+            {"name": "Flutter", "icon": "https://api.iconify.design/logos:flutter.svg"},
+            {"name": "Dart", "icon": "https://api.iconify.design/logos:dart.svg"}
+        ]
+    },
+    {
+        "title": "BornePort",
+        "image": "https://github.com/Hippolyte-LePallec/Portfolio/blob/main/public/borneport.png?raw=true",
+        "description": "Un site web presentant le port de Calais à destination d'une borne interactive avec un quiz.",
+        "link": "https://github.com/Hippolyte-LePallec/SAE-WEB-BORNPORT.git",
+        "tags": ["Web", "Borne interactive", "Quiz"],
+        "technologies": [
+            {"name": "HTML", "icon": "https://api.iconify.design/logos:html-5.svg"},
             {"name": "CSS", "icon": "https://api.iconify.design/logos:css-3.svg"}
         ]
     }
