@@ -17,10 +17,10 @@ const props = defineProps<{
             />
         </UCardHeader>
         <UCardBody>
-            <h3 class="text-lg font-semibold">{{ project.title }}</h3>
-            <p class="text-gray-600">{{ project.description }}</p>
+            <h3 class="text-lg font-semibold text-secondary mt-2">{{ project.title }}</h3>
+            <p class="text-white mt-2">{{ project.description }}</p>
             
-            <div class="mt-2">
+            <div class="mt-4">
                 <span 
                     v-for="tag in project.tags" 
                     :key="tag" 
@@ -29,8 +29,8 @@ const props = defineProps<{
                     {{ tag }}
                 </span>
             </div>
-            
-            <div class="mt-2 mb-2">
+
+            <div class="mt-4 mb-4">
                 <span 
                     v-for="tech in project.technologies" 
                     :key="tech.name" 
