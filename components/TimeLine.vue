@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { Icon } from '@iconify/vue';
-import parcourData from "../data/parcours.json";
+import parcourData from "../data/Parcours.json";
 
 const iconMap: Record<string, string> = {
     "i-material-symbols-work": "material-symbols:work",
