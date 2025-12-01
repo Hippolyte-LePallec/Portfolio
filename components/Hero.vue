@@ -2,6 +2,7 @@
 import { ref, reactive, onMounted, nextTick } from "vue";
 import gsap from "gsap";
 
+// --- Données inchangées ---
 const birthDate = new Date("2004-06-19");
 const currentAge = ref(0);
 const tweened = reactive({ number: 0 });
@@ -191,9 +192,10 @@ const technologies = [
     },
 ];
 
-// Classes utilitaires réutilisables
-const textCardClass =
-    "bg-slate-800/50 border border-slate-700 p-6 rounded-lg backdrop-blur-sm hover:border-cyan-500/50 transition-colors duration-300 relative overflow-hidden group";
+// --- NOUVEAU STYLE DES CARTES ---
+// Suppression du "backdrop-blur" et ajout d'une bordure latérale forte
+const baseCardClass =
+    "relative p-6 bg-slate-900/90 border-l-4 rounded-md overflow-hidden group hover:bg-slate-800 transition-all duration-300 shadow-lg";
 </script>
 
 <template>
@@ -210,7 +212,6 @@ const textCardClass =
                 background-size: 40px 40px;
             "
         ></div>
-
         <div
             class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] pointer-events-none"
         ></div>
@@ -227,10 +228,10 @@ const textCardClass =
                 ></div>
                 <div class="relative bg-slate-900 rounded-full p-1">
                     <UAvatar
-                        size="3xl"
+                        size="2xl"
                         src="/kayak.jpg"
                         alt="Moi en kayak"
-                        class="rounded-full h-40 w-40"
+                        class="rounded-full h-32 w-32"
                     />
                 </div>
             </div>
@@ -264,78 +265,87 @@ const textCardClass =
                 :ref="setAnimatedRef"
                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mb-16 text-left"
             >
-                <div :class="textCardClass">
-                    <div
-                        class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity"
-                    >
-                        <UIcon
-                            name="i-heroicons-user"
-                            class="w-5 h-5 text-cyan-400"
-                        />
+                <div :class="[baseCardClass, 'border-cyan-500']">
+                    <UIcon
+                        name="i-heroicons-user"
+                        class="absolute -right-6 -bottom-6 w-32 h-32 text-cyan-900/20 group-hover:text-cyan-800/30 transition-all z-0"
+                    />
+                    <div class="relative z-10">
+                        <h3
+                            class="text-lg font-semibold text-cyan-400 mb-3 flex items-center gap-2"
+                        >
+                            Soft Skills
+                        </h3>
+                        <span
+                            v-for="(line, index) in [
+                                'Curieux, rigoureux et autonome,',
+                                'j’apprécie aussi bien le travail d’équipe',
+                                'que le développement en solo.',
+                                'Toujours en quête de progression.',
+                            ]"
+                            :key="index"
+                            :ref="setTextRef"
+                            class="block mb-1"
+                        >
+                            {{ line }}
+                        </span>
                     </div>
-                    <span
-                        v-for="(line, index) in [
-                            'Curieux, rigoureux et autonome,',
-                            'j’apprécie aussi bien le travail d’équipe',
-                            ' que le développement en solo.',
-                            'Toujours en quête de progression.',
-                        ]"
-                        :key="index"
-                        :ref="setTextRef"
-                        class="block mb-1"
-                    >
-                        {{ line }}
-                    </span>
                 </div>
 
-                <div :class="textCardClass">
-                    <div
-                        class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity"
-                    >
-                        <UIcon
-                            name="i-heroicons-heart"
-                            class="w-5 h-5 text-purple-400"
-                        />
+                <div :class="[baseCardClass, 'border-purple-500']">
+                    <UIcon
+                        name="i-heroicons-heart"
+                        class="absolute -right-6 -bottom-6 w-32 h-32 text-purple-900/20 group-hover:text-purple-800/30 transition-all z-0"
+                    />
+                    <div class="relative z-10">
+                        <h3
+                            class="text-lg font-semibold text-purple-400 mb-3 flex items-center gap-2"
+                        >
+                            Engagements
+                        </h3>
+                        <span
+                            v-for="(line, index) in [
+                                'En parallèle, je suis moniteur de kayak et très investi',
+                                'dans la vie associative de mon club.',
+                                'Pédagogie, patience et initiative.',
+                            ]"
+                            :key="index"
+                            :ref="setTextRef"
+                            class="block mb-1"
+                        >
+                            {{ line }}
+                        </span>
                     </div>
-                    <span
-                        v-for="(line, index) in [
-                            'En parallèle, je suis moniteur de kayak et très investi',
-                            'dans la vie associative de mon club.',
-                            'Pédagogie, patience et initiative.',
-                        ]"
-                        :key="index"
-                        :ref="setTextRef"
-                        class="block mb-1"
-                    >
-                        {{ line }}
-                    </span>
                 </div>
 
                 <div
                     :class="[
-                        textCardClass,
-                        'md:col-span-2 lg:col-span-1 border-cyan-900/50 bg-cyan-950/10',
+                        baseCardClass,
+                        'md:col-span-2 lg:col-span-1 border-green-500 bg-slate-800/80 hover:bg-slate-800',
                     ]"
                 >
-                    <div
-                        class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity"
-                    >
-                        <UIcon
-                            name="i-heroicons-briefcase"
-                            class="w-5 h-5 text-green-400"
-                        />
+                    <UIcon
+                        name="i-heroicons-briefcase"
+                        class="absolute -right-6 -bottom-6 w-32 h-32 text-green-900/20 group-hover:text-green-800/30 transition-all z-0"
+                    />
+                    <div class="relative z-10">
+                        <h3
+                            class="text-lg font-semibold text-green-400 mb-3 flex items-center gap-2"
+                        >
+                            Objectif Actuel
+                        </h3>
+                        <span
+                            v-for="(line, index) in [
+                                'Actuellement, je cherche un stage en développement',
+                                'pour mettre à profit mes compétences.',
+                            ]"
+                            :key="index"
+                            :ref="setTextRef"
+                            class="block text-lg font-medium text-slate-200"
+                        >
+                            {{ line }}
+                        </span>
                     </div>
-                    <span
-                        v-for="(line, index) in [
-                            'Actuellement, je cherche un stage en développement',
-                            'pour mettre à profit mes compétences.',
-                        ]"
-                        :key="index"
-                        :ref="setTextRef"
-                        class="block text-lg font-semibold text-cyan-100"
-                    >
-                        {{ line }}
-                    </span>
                 </div>
             </div>
 
@@ -397,6 +407,7 @@ const textCardClass =
 </template>
 
 <style scoped>
+/* Style des chips inchangé */
 .tech-chip {
     display: flex;
     align-items: center;
