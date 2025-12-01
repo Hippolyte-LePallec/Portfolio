@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { Icon } from '@iconify/vue';
+import { ref, watch, onMounted, nextTick } from "vue";
+import { Icon } from "@iconify/vue";
+import gsap from "gsap";
 import parcourData from "../data/Parcours.json";
 
 const iconMap: Record<string, string> = {
@@ -8,68 +9,240 @@ const iconMap: Record<string, string> = {
     "i-material-symbols-school": "material-symbols:school",
     "i-tdesign-html5-filled": "tdesign:html5-filled",
     "i-teenyicons-react-solid": "teenyicons:react-solid",
-    "i-fa6-solid-school": "fa6-solid:school"
+    "i-fa6-solid-school": "fa6-solid:school",
 };
 
 const items = parcourData.map((item: any) => ({
     ...item,
-    icon: iconMap[item.icon] || item.icon
+    icon: iconMap[item.icon] || item.icon,
 }));
 
-const progress = ref(0);
 const maxStep = items.length - 1;
+const activeIndex = ref(0);
+const progressObj = ref({ value: 0 });
+const sectionRef = ref(null);
+const contentCardRef = ref(null);
 
-onMounted(() => {
-    let value = 0;
-    const stepSize = 0.01;
-    const interval = setInterval(() => {
-        if (value < maxStep) {
-            value += stepSize;
-            progress.value = Math.min(value, maxStep);
-        } else {
-            clearInterval(interval);
-        }
-    }, 5);
+const jumpToStep = (index: number) => {
+    gsap.killTweensOf(progressObj.value);
+
+    gsap.to(progressObj.value, {
+        value: index,
+        duration: 0.8,
+        ease: "power2.out",
+    });
+};
+
+onMounted(async () => {
+    gsap.from(sectionRef.value, {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        ease: "power2.out",
+    });
+
+    gsap.to(progressObj.value, {
+        value: maxStep,
+        duration: 4,
+        ease: "linear",
+        delay: 0.5,
+    });
 });
+
+watch(
+    () => progressObj.value.value,
+    (newVal, oldVal) => {
+        const newIndex = Math.round(newVal);
+        const oldIndex = Math.round(oldVal || 0);
+
+        if (newIndex !== activeIndex.value) {
+            activeIndex.value = newIndex;
+
+            if (contentCardRef.value) {
+                gsap.fromTo(
+                    contentCardRef.value,
+                    { y: 5, opacity: 0.8 },
+                    { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
+                );
+            }
+        }
+    }
+);
 </script>
 
 <template>
-    <div class="mb-4 flex flex-col items-center">
-        <h1 class="text-2xl font-bold text-center mb-6">
-            Mon Parcours et mes expériences
-        </h1>
-        <div class="relative w-full max-w-3xl px-4" style="height: 80px;">
-            <div class="absolute top-1/2 left-0 w-full h-2 bg-gray-200 rounded -translate-y-1/2"></div>
-            <div
-                class="absolute top-1/2 left-0 h-2 bg-secondary rounded -translate-y-1/2 transition-all"
-                :style="{ width: ((progress / maxStep) * 100) + '%' }"
-            ></div>
-            <!-- Points sur la ligne -->
-            <div class="absolute left-0 top-1/2 w-full flex justify-between items-center -translate-y-1/2 z-10">
-                <template v-for="(item, idx) in items" :key="idx">
-                    <div class="flex flex-col items-center" style="width: 40px;">
+    <section
+        ref="sectionRef"
+        class="relative py-24 bg-slate-950 overflow-hidden font-sans text-slate-300"
+    >
+        <div
+            class="absolute inset-0 z-0 opacity-20 pointer-events-none"
+            style="
+                background-image: linear-gradient(#334155 1px, transparent 1px),
+                    linear-gradient(to right, #334155 1px, transparent 1px);
+                background-size: 40px 40px;
+            "
+        ></div>
+
+        <div
+            class="absolute top-20 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[128px] pointer-events-none"
+        ></div>
+        <div
+            class="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[128px] pointer-events-none"
+        ></div>
+
+        <div
+            class="relative z-10 flex flex-col items-center w-full max-w-6xl mx-auto px-4"
+        >
+            <div class="text-center mb-24">
+                <h2
+                    class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight"
+                >
+                    Mon
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400"
+                        >Parcours</span
+                    >
+                </h2>
+                <div
+                    class="h-1 w-24 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full shadow-[0_0_15px_rgba(34,211,238,0.5)]"
+                ></div>
+            </div>
+
+            <div class="relative w-full px-4 mb-16 select-none">
+                <div
+                    class="absolute top-1/2 left-0 w-full h-1 bg-slate-800 rounded -translate-y-1/2"
+                ></div>
+
+                <div
+                    class="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 rounded -translate-y-1/2 shadow-[0_0_15px_rgba(34,211,238,0.6)]"
+                    :style="{
+                        width: (progressObj.value / maxStep) * 100 + '%',
+                    }"
+                ></div>
+
+                <div
+                    class="absolute left-0 top-1/2 w-full flex justify-between items-center -translate-y-1/2 z-10"
+                >
+                    <template v-for="(item, idx) in items" :key="idx">
                         <div
-                            class="w-10 h-10 rounded-full flex items-center justify-center shadow transition-colors duration-300"
-                            :class="(progress >= idx && idx !== maxStep) ? 'bg-secondary text-white' : 'bg-gray-300 text-gray-500'"
+                            class="group relative flex flex-col items-center cursor-pointer"
+                            @click="jumpToStep(idx)"
                         >
-                            <Icon :icon="item.icon" width="28" height="28" />
+                            <div
+                                class="w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-500 z-20 bg-slate-900"
+                                :class="[
+                                    activeIndex >= idx
+                                        ? 'border-cyan-400 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.4)] scale-110'
+                                        : 'border-slate-700 text-slate-600 group-hover:border-slate-500 group-hover:text-slate-400',
+                                ]"
+                            >
+                                <Icon
+                                    :icon="item.icon"
+                                    width="20"
+                                    height="20"
+                                />
+                            </div>
+
+                            <div
+                                class="absolute -top-10 transition-all duration-300 whitespace-nowrap"
+                                :class="
+                                    activeIndex === idx
+                                        ? 'opacity-100 -translate-y-1'
+                                        : 'opacity-50 group-hover:opacity-100'
+                                "
+                            >
+                                <span
+                                    class="text-xs font-mono font-bold"
+                                    :class="
+                                        activeIndex >= idx
+                                            ? 'text-cyan-400'
+                                            : 'text-slate-500'
+                                    "
+                                >
+                                    {{ item.date }}
+                                </span>
+                            </div>
+
+                            <div
+                                class="absolute -top-4 w-px h-4 bg-slate-800 transition-colors duration-300"
+                                :class="
+                                    activeIndex >= idx ? 'bg-cyan-500/50' : ''
+                                "
+                            ></div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="w-full max-w-3xl relative perspective-1000">
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 blur-2xl -z-10 rounded-xl transform scale-95"
+                ></div>
+
+                <div
+                    ref="contentCardRef"
+                    class="bg-slate-800/50 border border-slate-700 p-8 rounded-lg backdrop-blur-sm relative overflow-hidden transition-all duration-300 hover:border-cyan-500/30"
+                >
+                    <div
+                        class="flex items-center gap-2 mb-6 border-b border-slate-700/50 pb-4"
+                    >
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div
+                            class="w-3 h-3 rounded-full bg-yellow-500/80"
+                        ></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+
+                        <div class="ml-auto font-mono text-xs flex gap-4">
+                            <span class="text-slate-500"
+                                >STATUS:
+                                <span class="text-emerald-400"
+                                    >ACTIVE</span
+                                ></span
+                            >
+                            <span class="text-slate-500"
+                                >ID:
+                                <span class="text-cyan-400">{{
+                                    String(activeIndex).padStart(2, "0")
+                                }}</span></span
+                            >
                         </div>
                     </div>
-                </template>
-            </div>
-            <div class="absolute left-0 top-full w-full flex justify-between items-center mt-2 z-10">
-                <template v-for="(item, idx) in items" :key="'label-' + idx">
-                    <div class="flex flex-col items-center w-40">
-                        <div class="text-sm text-center font-semibold text-white break-words">
-                            {{ item.title }}
+
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="flex-1">
+                            <h3
+                                class="text-2xl font-bold text-white mb-2 tracking-wide flex items-center gap-3"
+                            >
+                                {{ items[activeIndex]?.title }}
+                                <Icon
+                                    icon="line-md:loading-twotone-loop"
+                                    class="text-cyan-500 text-lg opacity-50"
+                                    v-if="activeIndex === maxStep"
+                                />
+                            </h3>
+                            <div class="h-0.5 w-16 bg-cyan-900/50 mb-4"></div>
+                            <p class="text-slate-300 text-lg leading-relaxed">
+                                {{ items[activeIndex]?.description }}
+                            </p>
                         </div>
-                        <div class="text-xs text-gray-400 mt-1">{{ item.date }}</div>
+
+                        <div class="hidden md:block opacity-10 rotate-12">
+                            <Icon
+                                :icon="items[activeIndex]?.icon"
+                                width="100"
+                                height="100"
+                            />
+                        </div>
                     </div>
-                </template>
+                </div>
             </div>
         </div>
-        <div class="mt-24 max-w-lg text-center text-gray-200 text-base px-2">
-            {{ items[Math.round(progress)]?.description }}
-        </div>
-    </div>
+    </section>
 </template>
+
+<style scoped>
+.perspective-1000 {
+    perspective: 1000px;
+}
+</style>
