@@ -71,28 +71,16 @@ watch(
 </script>
 
 <template>
-    <section
-        ref="sectionRef"
-        class="relative py-24 bg-slate-950 overflow-hidden font-sans text-slate-300"
-    >
-        <div
-            class="absolute inset-0 z-0 opacity-20 pointer-events-none"
-            style="
-                background-image: linear-gradient(#334155 1px, transparent 1px),
-                    linear-gradient(to right, #334155 1px, transparent 1px);
-                background-size: 40px 40px;
-            "
-        ></div>
+    <section ref="sectionRef" class="section-base">
+        <!-- Grille de fond alignée -->
+        <div class="grid-background"></div>
+
+        <!-- Effets lumineux -->
+        <div class="glow-effect glow-cyan-timeline"></div>
+        <div class="glow-effect glow-purple-timeline"></div>
 
         <div
-            class="absolute top-20 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[128px] pointer-events-none"
-        ></div>
-        <div
-            class="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[128px] pointer-events-none"
-        ></div>
-
-        <div
-            class="relative z-10 flex flex-col items-center w-full max-w-6xl mx-auto px-4"
+            class="relative z-10 flex flex-col items-center w-full max-w-6xl mx-auto px-4 py-24"
         >
             <div class="text-center mb-24">
                 <h2
@@ -242,6 +230,49 @@ watch(
 </template>
 
 <style scoped>
+/* Styles de base de section */
+.section-base {
+    position: relative;
+    background-color: #020617;
+    color: #cbd5e1;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Grille de fond alignée */
+.grid-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.2;
+    pointer-events: none;
+    background-image: linear-gradient(#334155 1px, transparent 1px),
+        linear-gradient(to right, #334155 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+/* Effets lumineux */
+.glow-effect {
+    position: absolute;
+    width: 24rem;
+    height: 24rem;
+    border-radius: 50%;
+    filter: blur(128px);
+    pointer-events: none;
+}
+
+.glow-cyan-timeline {
+    top: 5rem;
+    right: 0;
+    background-color: rgba(6, 182, 212, 0.1);
+}
+
+.glow-purple-timeline {
+    bottom: 0;
+    left: 0;
+    background-color: rgba(168, 85, 247, 0.1);
+}
+
 .perspective-1000 {
     perspective: 1000px;
 }
