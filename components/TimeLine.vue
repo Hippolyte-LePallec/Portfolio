@@ -71,7 +71,7 @@ watch(
 </script>
 
 <template>
-    <section ref="sectionRef" class="section-base">
+    <section ref="sectionRef" class="section-base" id="timeline">
         <!-- Grille de fond alignée -->
         <div class="grid-background"></div>
 

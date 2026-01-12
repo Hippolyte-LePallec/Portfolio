@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+html {
+    scroll-behavior: smooth;
+    /* Optionnel : compense la hauteur du header fixe pour ne pas cacher le titre de la section */
+    scroll-padding-top: 80px;
+}

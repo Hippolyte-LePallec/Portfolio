@@ -99,8 +99,11 @@ const contactInfo = {
 </script>
 
 <template>
+    <Header />
+
     <section
         class="relative min-h-screen bg-slate-950 text-slate-300 overflow-hidden font-sans"
+        id="contact"
     >
         <div
             class="absolute inset-0 z-0 opacity-20"

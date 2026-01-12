@@ -2,6 +2,8 @@
     <div
         class="bg-slate-950 min-h-screen text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-200"
     >
+        <Header />
+
         <Hero />
 
         <section class="relative py-20 overflow-hidden">
@@ -64,8 +66,8 @@
                     </div>
                 </div>
             </div>
+            <Projects />
         </section>
-
-        <Projects />
+        <Footer />
     </div>
 </template>
