@@ -1,89 +1,142 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import type { Project } from "../types/project";
 import projectsData from "../data/projects.json";
 
-const projects = ref<Project[]>([]);
+const projects = ref<Project[]>(projectsData);
+const containerRef = ref<HTMLElement | null>(null);
 
-if (Array.isArray(projectsData)) {
-    projects.value = projectsData.map((project: any) => ({
-        title: project.title,
-        image: project.image,
-        description: project.description,
-        link: project.link,
-        tags: project.tags,
-        technologies: project.technologies,
-    }));
-} else {
-    console.error(
-        "Les données des projets ne sont pas un tableau:",
-        projectsData
-    );
-}
+let animationId: number | null = null;
+let restartTimeout: any = null;
+let isPaused = false;
+
+// Variables pour le Drag (Glisser)
+let isDragging = false;
+let startX: number;
+let scrollLeftStart: number;
+
+const INTERACTION_PAUSE_TIME = 5000;
+const SPEED = 1;
+
+const animate = () => {
+    if (!containerRef.value || isPaused || isDragging) return;
+
+    containerRef.value.scrollLeft += SPEED;
+
+    if (containerRef.value.scrollLeft >= containerRef.value.scrollWidth / 2) {
+        containerRef.value.scrollLeft = 0;
+    }
+
+    animationId = requestAnimationFrame(animate);
+};
+
+const startAutoPlay = () => {
+    isPaused = false;
+    if (!animationId) animationId = requestAnimationFrame(animate);
+};
+
+const stopAutoPlay = () => {
+    isPaused = true;
+    if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+    }
+    if (restartTimeout) clearTimeout(restartTimeout);
+};
+
+// --- LOGIQUE DE DRAG (SOURIS & TOUCH) ---
+
+const startDragging = (e: MouseEvent | TouchEvent) => {
+    isDragging = true;
+    stopAutoPlay();
+
+    const pageX = e instanceof MouseEvent ? e.pageX : e.touches[0].pageX;
+    startX = pageX - (containerRef.value?.offsetLeft || 0);
+    scrollLeftStart = containerRef.value?.scrollLeft || 0;
+};
+
+const stopDragging = () => {
+    if (!isDragging) return;
+    isDragging = false;
+
+    // Relance l'auto-play après un délai d'inactivité
+    restartTimeout = setTimeout(() => {
+        startAutoPlay();
+    }, INTERACTION_PAUSE_TIME);
+};
+
+const moveDragging = (e: MouseEvent | TouchEvent) => {
+    if (!isDragging || !containerRef.value) return;
+    e.preventDefault();
+
+    const pageX = e instanceof MouseEvent ? e.pageX : e.touches[0].pageX;
+    const x = pageX - (containerRef.value.offsetLeft || 0);
+    const walk = (x - startX) * 1.5; // Multiplier pour la sensibilité
+    containerRef.value.scrollLeft = scrollLeftStart - walk;
+
+    // Gestion de la boucle infinie même pendant le drag
+    if (containerRef.value.scrollLeft <= 0) {
+        containerRef.value.scrollLeft = containerRef.value.scrollWidth / 2;
+        scrollLeftStart = containerRef.value.scrollLeft + walk;
+    } else if (
+        containerRef.value.scrollLeft >=
+        containerRef.value.scrollWidth / 2
+    ) {
+        containerRef.value.scrollLeft = 0;
+        scrollLeftStart = containerRef.value.scrollLeft + walk;
+    }
+};
+
+onMounted(() => {
+    startAutoPlay();
+});
+
+onUnmounted(() => {
+    stopAutoPlay();
+});
 </script>
 
 <template>
-    <div class="mt-12 w-full max-w-7xl">
-        <div v-if="projects.length > 0">
-            <UCarousel
-                v-slot="{ item }"
-                loop
-                dots
-                :auto-scroll="{ speed: 1, stopOnInteraction: false }"
-                :items="projects"
-                :ui="{
-                    item: 'basis-full md:basis-1/2 lg:basis-1/3',
-                    container: 'gap-6',
-                }"
-                class="carousel-wrapper"
-            >
-                <ProjectCard :project="item" />
-            </UCarousel>
-        </div>
-        <div v-else class="text-center py-16">
-            <div
-                class="bg-slate-800/30 border border-slate-700 rounded-lg p-8 backdrop-blur-sm"
-            >
-                <UIcon
-                    name="i-heroicons-inbox"
-                    class="w-16 h-16 text-slate-500 mx-auto mb-4"
-                />
-                <p class="text-slate-400 text-lg">Aucun projet à afficher</p>
+    <div class="w-full py-12 overflow-hidden select-none">
+        <div
+            ref="containerRef"
+            class="flex overflow-x-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+            @mousedown="startDragging"
+            @mousemove="moveDragging"
+            @mouseup="stopDragging"
+            @mouseleave="stopDragging"
+            @touchstart="startDragging"
+            @touchmove="moveDragging"
+            @touchend="stopDragging"
+            @wheel="handleUserInteraction"
+        >
+            <div class="flex gap-6 pr-6 shrink-0">
+                <div
+                    v-for="(project, index) in [...projects, ...projects]"
+                    :key="index"
+                    class="w-[300px] md:w-[400px] lg:w-[450px] shrink-0"
+                >
+                    <ProjectCard
+                        :project="project"
+                        class="h-full pointer-events-none"
+                    />
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-.carousel-wrapper {
-    position: relative;
+div {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-.carousel-wrapper :deep(.carousel-dots) {
-    margin-top: 2rem;
+div::-webkit-scrollbar {
+    display: none;
 }
 
-.carousel-wrapper :deep(.carousel-dot) {
-    background-color: #475569;
-    transition: all 0.3s ease;
-}
-
-.carousel-wrapper :deep(.carousel-dot.active) {
-    background-color: #22d3ee;
-    box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
-}
-
-.carousel-wrapper :deep(.carousel-arrow) {
-    background-color: rgba(30, 41, 59, 0.8);
-    border: 1px solid #334155;
-    color: #94a3b8;
-    transition: all 0.3s ease;
-}
-
-.carousel-wrapper :deep(.carousel-arrow:hover) {
-    background-color: #0f172a;
-    border-color: #22d3ee;
-    color: #22d3ee;
-    box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+.flex {
+    will-change: transform;
 }
 </style>
