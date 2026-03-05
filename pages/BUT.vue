@@ -76,9 +76,19 @@ onMounted(async () => {
 
     <main>
         <section
-            class="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-slate-300 overflow-hidden font-sans pt-32 pb-16"
+            class="relative min-h-screen bg-slate-950 text-slate-300 overflow-hidden font-sans pt-32 pb-16"
             id="but"
         >
+            <div
+                class="absolute inset-0 z-0 opacity-20"
+                style="
+                    background-image:
+                        linear-gradient(#334155 1px, transparent 1px),
+                        linear-gradient(to right, #334155 1px, transparent 1px);
+                    background-size: 40px 40px;
+                "
+            ></div>
+
             <div
                 class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none z-0"
             ></div>
