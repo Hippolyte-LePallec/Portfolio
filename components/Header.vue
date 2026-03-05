@@ -7,6 +7,7 @@ const navLinks = [
     { name: "Parcours", to: "/#timeline" },
     { name: "Projets", to: "/#projects" },
     { name: "Contact", to: "/contact" },
+    { name: "Mon BUT", to: "/but" },
 ];
 
 const headerRef = ref(null);
