@@ -35,7 +35,7 @@ onMounted(async () => {
                 duration: 0.8,
                 ease: "power3.out",
                 stagger: 0.15,
-            }
+            },
         );
     }
 });
@@ -108,7 +108,8 @@ const contactInfo = {
         <div
             class="absolute inset-0 z-0 opacity-20"
             style="
-                background-image: linear-gradient(#334155 1px, transparent 1px),
+                background-image:
+                    linear-gradient(#334155 1px, transparent 1px),
                     linear-gradient(to right, #334155 1px, transparent 1px);
                 background-size: 40px 40px;
             "
