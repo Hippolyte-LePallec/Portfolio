@@ -17,11 +17,11 @@ defineProps<{
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div
-                class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-80"
+                class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-80 pointer-events-none"
             ></div>
         </div>
 
-        <div class="p-6 flex flex-col flex-grow">
+        <div class="p-6 flex flex-col flex-grow relative z-10">
             <h3
                 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300 mb-2"
             >
@@ -46,13 +46,16 @@ defineProps<{
                 <NuxtLink
                     :to="project.link"
                     target="_blank"
-                    class="flex items-center justify-center gap-2 w-full py-3 bg-white text-gray-900 hover:bg-blue-500 hover:text-white font-bold rounded-xl transition-all duration-300 transform active:scale-95"
+                    class="btn-discover relative z-[99] isolate flex items-center justify-center gap-2 w-full py-3 bg-white text-gray-900 font-bold rounded-xl transition-all duration-300 hover:bg-blue-600 hover:text-white active:scale-95"
                 >
-                    <span>Découvrir</span>
+                    <span class="relative z-10">Découvrir</span>
                     <UIcon
                         name="i-heroicons-arrow-right-20-solid"
-                        class="w-4 h-4"
+                        class="w-4 h-4 relative z-10"
                     />
+                    <div
+                        class="absolute inset-0 rounded-xl bg-blue-400/20 blur-md opacity-0 group-hover:opacity-100 animate-pulse-slow"
+                    ></div>
                 </NuxtLink>
             </div>
         </div>
@@ -60,7 +63,15 @@ defineProps<{
 </template>
 
 <style scoped>
-/* Animation subtile pour l'apparition */
+/* Force le curseur et l'interaction */
+.btn-discover {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    text-decoration: none;
+    user-select: none;
+}
+
+/* Animation d'apparition de la carte */
 .group {
     animation: fadeIn 0.5s ease-out;
 }
@@ -74,5 +85,21 @@ defineProps<{
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@keyframes pulse-slow {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.6;
+    }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 2s infinite ease-in-out;
 }
 </style>

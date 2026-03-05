@@ -177,7 +177,7 @@ const technologies = [
     },
     {
         label: "Express.js",
-        icon: "https://api.iconify.design/logos:express.svg",
+        icon: "https://api.iconify.design/logos:devicon:express-wordmark",
         link: "https://expressjs.com/en/starter/installing.html",
     },
     {
@@ -207,7 +207,8 @@ const baseCardClass =
         <div
             class="absolute inset-0 z-0 opacity-20"
             style="
-                background-image: linear-gradient(#334155 1px, transparent 1px),
+                background-image:
+                    linear-gradient(#334155 1px, transparent 1px),
                     linear-gradient(to right, #334155 1px, transparent 1px);
                 background-size: 40px 40px;
             "
@@ -354,7 +355,7 @@ const baseCardClass =
                     class="text-xl font-mono text-cyan-500 mb-8 flex items-center justify-center gap-3"
                 >
                     <span class="w-8 h-[1px] bg-cyan-800"></span>
-                    STACK TECHNIQUE
+                    Competences
                     <span class="w-8 h-[1px] bg-cyan-800"></span>
                 </h3>
 
