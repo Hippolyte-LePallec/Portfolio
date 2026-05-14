@@ -9,7 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "start": "node .output/server/index.mjs"
-},
+  },
   "dependencies": {
     "@nuxt/ui": "^3.2.0",
     "@types/nodemailer": "^7.0.4",
